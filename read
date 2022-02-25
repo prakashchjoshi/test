@@ -8,3 +8,7 @@ UsbActivityLogComponent,
     
     
     FormlyModule.forRoot({  types: [{name: 'repeat', component: RepeatTypeComponent}], extras: { lazyRender: true } }),
+
+
+let option: Array<object> = field.templateOptions.options || [];
+          let index = option.findIndex((e)=>e.value==model.fieldDeletePath);
