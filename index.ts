@@ -98,6 +98,11 @@ getResponseBodyValidatorList(delRequestList): SbDocumentBodyValidator[] {
   
   repeat-section.type.ts
   
+  import { Component } from '@angular/core';
+import { FieldArrayType, FormlyFormBuilder } from '@ngx-formly/core';
+
+@Component({
+  selector: 'formly-repeat-section',
   template: `
     <div *ngFor="let field of field.fieldGroup; let i = index">
       <formly-group
@@ -119,6 +124,13 @@ getResponseBodyValidatorList(delRequestList): SbDocumentBodyValidator[] {
       </button>
     </div>
   `
+})
+export class RepeatTypeComponent extends FieldArrayType {
+  constructor(builder: FormlyFormBuilder) {
+    super(builder);
+  }
+}
+
   
   editor-rule-model.component.ts
   
