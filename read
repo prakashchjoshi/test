@@ -1,0 +1,10 @@
+import { RepeatTypeComponent } from './components/repeat/repeat-section.type';
+
+
+UsbActivityLogComponent,
+    RepeatTypeComponent
+    
+    
+    
+    
+    FormlyModule.forRoot({  types: [{name: 'repeat', component: RepeatTypeComponent}], extras: { lazyRender: true } }),
