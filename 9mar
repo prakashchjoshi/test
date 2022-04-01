@@ -1,200 +1,120 @@
-getDisplayDateFormat(placeHolder: string): FormlyFieldConfig {
-    return {
-      key: 'displayDateFormat',
-      type: 'select',
-      templateOptions: {
-        label: 'Selete display date format',
-        placeholder: placeHolder,
-        required: true,
-        options: [
-          {value: 'MM/DD/YYYY', label: "MM/DD/YYYY"},
-          {value: 'YYYY-MM-DD', label: "YYYY-MM-DD"}
-        ]
-      }
-    }
-  }
+<mat-form-field class="mat-form-input">
+  <mat-label>Parameter value</mat-label>
+  <input matInput placeholder="Pattern" formControlName="parameterValue">
+  <mat-hint align="start">Required</mat-hint>
+</mat-form-field>
 
-  getQueryFilterDisplayYear(placeHolder: string): FormlyFieldConfig {
-    return {
-      key: 'filterDisplayYear',
-      type: 'select',
-      templateOptions: {
-        label: 'Selete filter display year',
-        multiple: true,
-        placeholder: placeHolder,
-        required: true,
-        options: [
-          {value: '2021', label: "2021"},
-          {value: '2022', label: "2022"}
-        ]
-      }
-    }
-  }
 
-  getParameter(placeHolder: string): FormlyFieldConfig {
-    return {
-      key: 'parameter',
-      type: 'select',
-      templateOptions: {
-        label: 'Selete parameter',
-        placeholder: placeHolder,
-        required: true,
-        options: [
-          {value: 'year', label: "year"},
-          {value: 'startDate', label: "startDate"},
-          {value: 'endDate', label: "endDate"}
-        ]
-      }
-    }
-  }
 
-  getOperator(placeHolder: string): FormlyFieldConfig {
-    return {
-      key: 'operator',
-      type: 'select',
-      templateOptions: {
-        label: 'Selete operator',
-        placeholder: placeHolder,
-        required: true,
-        options: [
-          {value: '=', label: "="},
-          {value: '>=', label: ">="},
-          {value: '<=>', label: "<=>"}
-        ]
-      }
-    }
-  }
 
-  headingParameterConfig(label: string): FormlyFieldConfig {
-    return {
-      template: `<div><strong>${label}</strong></div>`
-    };
+ngOnInit() {
+    this.modalService.urlParameterModalComponent = this;
+    this.urlParameter = this.formBuilder.group({
+      parameter: ['0'],
+      parameterName: [''],
+      requiredParameter: ['0'],
+      parameterType: ['0'],
+      parameterValue: ['0']
+    });
   }
-
-  getFilterDateFormat(placeHolder: string): FormlyFieldConfig {
-    return {
-      key: 'filterDateFormat',
-      type: 'select',
-      templateOptions: {
-        label: 'Selete filter date format',
-        placeholder: placeHolder,
-        required: true,
-        options: [
-          {value: 'YYYY', label: "YYYY"},
-          {value: 'YYYY-MM-DD', label: "YYYY-MM-DD"}
-        ]
-      }
-    }
-  }
-
-  getQueryParameters(placeHolder: string): FormlyFieldConfig {
-    return {
-      fieldGroup: [{
-        key: 'queryParameters',
-        type: 'repeat',
-        fieldArray: {
-          templateOptions: {
-            btnText: placeHolder,
-          },
-          fieldGroup: [
-            this.getParameter(''),
-            this.getOperator('Values'),
-            this.getFilterDateFormat('')
-          ]
-        },
-      }]
-    }
-  }
-
-  getValueParameters(placeHolder: string): FormlyFieldConfig {
-    return {
-      key: 'value',
-      type: 'select',
-      templateOptions: {
-        label: 'Selete Value',
-        placeholder: placeHolder,
-        required: true,
-        options: [
-          {value: 'Completed', label: "Completed"}
-        ]
-      }
-    }
+  
+  this.requiredParameter.setValue(data.requiredParameter);
+      this.parameterType.setValue(data.parameterType);
+      this.parameterValue.setValue(data.parameterValue);
+  
+  get parameterValue() {
+    return this.urlParameter.get('parameterValue');
   }
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  {
-        name: 'displayDateFormat',
-        calc: 'displayDateFormat',
-        hasError: false,
-        description: 'Apply the data display formats for the response body attribute.',
-        fields: [
-          this.vfc.getDisplayDateFormat('Select')
-        ]
-      },
-      {
-        name: 'dateQueryFilter',
-        calc: 'dateQueryFilter',
-        hasError: false,
-        description: '',
-        fields: [
-          this.vfc.getQueryFilterDisplayYear('Select display year'),
-          this.vfc.headingParameterConfig('Parameter: '),
-          this.vfc.getQueryParameters('Add more')
-        ]
-      },
-      {
-        name: 'queryFilter',
-        calc: 'queryFilter',
-        hasError: false,
-        description: '',
-        fields: [
-          this.vfc.getOperator('Select'),
-          this.vfc.getValueParameters('Select')
-        ]
-      }
-      
-      
-      
-      
-      
-      queryParameters:[{}]
-      
-      
-      
-      
-      else if(validator.name == "displayDateFormat") {
-              dataObject[namePath].database.mappings[field]['displayDateFormat'] = validator.errorResponse.displayDateFormat;
-            } else if(validator.name == "dateQueryFilter") {
-              dataObject[namePath].database.mappings[field]['queryFilter'] = true;
-              dataObject[namePath].database.mappings[field]['queryFilterDisplayYear'] = validator.errorResponse.filterDisplayYear;
+  export interface SbDocumentParameter {
+  parameter?: string;
+  parameterName?: string;
+  requiredParameter?: string;
+  parameterType?: string;
+  parameterValue?: string;
+}
 
-              if (validator.errorResponse.queryParameters && validator.errorResponse.queryParameters.length) {
-                dataObject[namePath].database.mappings[field]['queryParameters'] = [];
-                for(let depndency of validator.errorResponse.queryParameters) {
-                  let obj = {
-                    "parameter": depndency.parameter,
-                    "operator": depndency.operator,
-                    "filterDateFormat": depndency.filterDateFormat
-                  }
-                  dataObject[namePath].database.mappings[field]['queryParameters'].push(obj);
-                }
+
+
+
+for (const path of paths) {
+            const pathItem: SbDocumentParameter = {
+              parameter: 'Path',
+              parameterName: path['name'],
+              requiredParameter: path['required'] == true || path['required'] == 'true' ? 'Yes' : 'No',
+              parameterType: path['schema'] ? (path['schema']['type'] == 'string' ? 'String' : 'Integer') : path['type'],
+              parameterValue: ""
+            };
+            sbDocument.parameters.push(pathItem);
+          }
+
+          const queries = methodObj['parameters'].filter(a => a['in'] === 'query');
+
+          for (const query of queries) {
+            const queryItem: SbDocumentParameter = {
+              parameter: 'Query',
+              parameterName: query['name'],
+              requiredParameter: query['required'] == true || query['required'] == 'true' ? 'Yes' : 'No',
+              parameterType: query['schema'] ? (query['schema']['type'] == 'string' ? 'String' : 'Integer') : query['type'],
+              parameterValue: ""
+            };
+            sbDocument.parameters.push(queryItem);
+          }
+              
+              
+              
+              
+              
+              
+              // Core infra Config //
+          let newPath =  pathObj['pathName'];
+          let ismatch = false;
+          if (pathObj['parameters'] && pathObj['parameters'].length) {
+            pathObj['parameters'].map((param)=>{
+              if (newPath.indexOf('{'+param.parameterName+'}')>-1) {
+                ismatch = true;
+                newPath = newPath.replace('/{'+param.parameterName+'}', param.parameterValue);
               }
-            } else if(validator.name == "queryFilter") {
-              dataObject[namePath].database.mappings[field]['queryFilter'] = true;
-              dataObject[namePath].database.mappings[field]['queryParameters'] = [];
-              let obj = {
-                "value": validator.errorResponse.value,
-                "operator": validator.errorResponse.operator,
-                "filterDateFormat": depndency.filterDateFormat
+            })
+          }
+
+          let nameMetod = pathObj['method'].toLowerCase();
+          let namePath = pathObj['pathName'].replace('/','').split('/')[0];
+          let predicate = {};
+          if (!ismatch) {
+            predicate['predicates'] = [
+              {
+                "and": [
+                  {
+                    "equals": {
+                      "method": pathObj['method'],
+                      "path": `${basePath}/${newPath}`
+                    }
+                  },
+                  {"inject": `(config) => {\n\n config.state.configYML='lib/config/${nameMetod}-${namePath}.yml';\n config.state.apiSchema='../../../../lib/responseSchema/${nameMetod}-${namePath}-schema.js' ;\n config.state.databaseYML='lib/config/database-${namePath}.yml'; \n return true;\n}`}
+                ]
               }
-              dataObject[namePath].database.mappings[field]['queryParameters'].push(obj);
+            ];
+          } else {
+            predicate['predicates'] = [
+              {
+                "and": [{
+                  "equals": {
+                    "method": pathObj['method'],
+                  }},
+                  {"matches":{
+                      "path": `${basePath}/${newPath}`
+                    }},
+                  {"inject": `(config) => {\n\n config.state.configYML='lib/config/${this.getFileName(pathObj['name'], true)}';\n config.state.apiSchema='../../../../lib/responseSchema/${this.getFileName(pathObj['name'], false)}' ;\n config.state.databaseYML='lib/config/database-${namePath}.yml'; \n return true;\n}`}
+                ]
+              }
+            ];
+          }
+          
+          predicate['responses'] = [
+            {
+              "inject": "<%- stringify(filename, '/lib/core/virtualizeAPI.js') %>"
             }
+          ]
