@@ -6,7 +6,7 @@
   }
   
     showHost = false;
-    
+    hostConfig: SelectOptionItem[] = [];
     this.hostConfig = this.openBankingService.getHostConfig();
     
     
