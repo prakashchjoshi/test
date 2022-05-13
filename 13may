@@ -1,0 +1,57 @@
+ getHostConfig() {
+    return [
+      { id: 'usbank.com', value: 'usbank.com' },
+      { id: 'elanfs.com', value: 'elanfs.com' }
+    ];
+  }
+  
+    showHost = false;
+    
+    this.hostConfig = this.openBankingService.getHostConfig();
+    
+    
+    changeTask: [''],
+      host: ['']
+  
+  handleChangeSource (value) {
+    this.jobType = value;
+    if (value == 'Proxy') {
+      this.isProxy = true;
+      this.showHost = true;
+    } else {
+      this.isProxy = false;
+      this.showHost = false;
+    }
+  }
+  
+  reset(): void {
+    this.processing = false;
+    this.showError = false;
+    this.showChangeTicket = false;
+    this.showHost = false;
+    this.jobType = '';
+    this.isProxy = false;
+    this.deploymentJob.reset();
+  }
+  
+  
+  
+  
+  get host() {
+    return this.deploymentJob.get('host');
+  }
+  
+  
+  
+  <div *ngIf="showHost">
+                 <mat-form-field class="mat-form-input">
+                   <mat-label>Host Config</mat-label>
+                   <mat-select multiple formControlName="host">
+                     <mat-option *ngFor="let config of hostConfig" [value]="config.id">
+                       {{config.value}}
+                     </mat-option>
+                   </mat-select>
+                   <mat-hint align="start">Required</mat-hint>
+                 </mat-form-field>
+               </div>
+               
